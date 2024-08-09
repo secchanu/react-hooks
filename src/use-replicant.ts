@@ -48,10 +48,9 @@ export const useReplicant = <V, T = Jsonify<V>>(
 	}, [replicant]);
 
 	const updateValue = useCallback(
-		(newValue: T | ((oldValue?: T) => void)) => {
-			if (typeof newValue === "function") {
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-				(newValue as any)(replicant.value);
+		(newValue: T | ((oldValue?: T) => T | undefined)) => {
+			if (newValue instanceof Function) {
+				replicant.value = newValue(replicant.value);
 			} else {
 				replicant.value = newValue;
 			}

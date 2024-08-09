@@ -95,8 +95,11 @@ export const DummyComponent = () => {
 		setDummy({ runner: { name: "bar" } });
 		setDummy((oldValue) => {
 			if (oldValue) {
-				oldValue.runner.name += "name";
+				const newValue = { ...oldValue };
+				newValue.runner.name += "name";
+				return newValue;
 			}
+			return oldValue;
 		});
 	}, [setDummy]);
 
